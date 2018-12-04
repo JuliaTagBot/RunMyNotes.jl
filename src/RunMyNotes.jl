@@ -46,15 +46,15 @@ function folder(indir::String, outdir::String=normpath(indir);
         error("encountered $(length(errs)) errors executing & converting notebooks, details printed above")
     end
     
-    return true
+    return length(errs)==0 # for @test
 end
 
 
-# function file(fullname::String, outdir; html::Bool=true, run::Bool=true, credit::Bool=true)
-#
-#
-# end
-
+"""
+    RunMyNotes.package(ModuleName)
+This essentially runs `RunMyNotes.foler(".julia/dev/ModuleName/notes/")`. 
+Change keyword `sub="notes"` to select a different folder. 
+"""
 function package(mod::Module, outdir=nothing; sub::String="notes", kw...)
 
     indir = joinpath(dirname(pathof(mod)), "..", sub)
@@ -65,5 +65,6 @@ function package(mod::Module, outdir=nothing; sub::String="notes", kw...)
 
     folder(indir, outdir, kw...)
 end
+
 
 end # module
