@@ -6,8 +6,8 @@ using Literate, Conda
 
 """
     folder(in, [out])
-Runs all files `*.jl` found in folder `in`, generating a notebook for each,
-saved in the same folder or in `out`.
+Runs all files `*.jl` found in folder `in`, generating a Jupyter `.ipynb` notebook for each,
+saved in the same folder or in `out` if provided.
 
 Keywords `html=true` then converts this notebook to HTML too,
 `throw=true` exits with an error if any errors were encountered in doing this.
@@ -23,7 +23,7 @@ function folder(indir::String, outdir::String=normpath(indir);
     post = credit ? appendcredit : identity
 
     all || @error "all=false is ignored for now"
-    list = filter(s->endswith(s,".jl"), readdir(indir))
+    list = filter(s->endswith(s,".jl"), readdir(fulldir))
 
     errs = []
 
